@@ -22,27 +22,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/custom_background_color">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/mBtnNew"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:id="@+id/layer_button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/icon_layers_new"/>
+            android:padding="0dp"
+            android:src="@drawable/icon_layers_new"
+            android:contentDescription="@string/layer_new"
+            style="?android:attr/borderlessButtonStyle" />
 
         <ImageButton
-            android:id="@+id/mBtnDelete"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:id="@+id/layer_button_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/icon_layers_delete"/>
+            android:src="@drawable/icon_layers_delete"
+            android:contentDescription="@string/layer_delete"
+            style="?android:attr/borderlessButtonStyle" />
 
     </LinearLayout>
 
@@ -50,6 +57,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="fitStart"
         app:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/layer_view_holder">
     </android.support.v7.widget.RecyclerView>

@@ -19,6 +19,7 @@
 
 package org.catrobat.paintroid.ui.layer;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,77 +29,108 @@ import android.widget.ImageView;
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.tools.Layer;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class LayerAdapter extends RecyclerView.Adapter<LayerAdapter.LayerViewHolder> implements
-        TouchHelperCallback.TouchHelperAdapterInterface {
+		TouchHelperCallback.TouchHelperAdapter {
 
-    List<Layer> mLayers = new ArrayList<>();
-    OnLayerClickListener mListener;
+	private int selectedPosition = 0;
+	private final List<Layer> layers;
+	private OnLayerClickListener layerClickListener;
 
-    class LayerViewHolder extends RecyclerView.ViewHolder {
+	public LayerAdapter(List<Layer> layers) {
+		this.layers = layers;
+	}
 
-        ImageView mImageView;
+	public void setClickListener(OnLayerClickListener listener) {
+		layerClickListener = listener;
+	}
 
-        LayerViewHolder(View itemView) {
-            super(itemView);
+	@Override
+	public LayerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layer_view_holder, parent, false);
+		return new LayerViewHolder(view);
+	}
 
-            mImageView = (ImageView) itemView.findViewById(R.id.layer_view);
-        }
-    }
+	@Override
+	public void onBindViewHolder(final LayerViewHolder holder, int position) {
+		final Layer layer = layers.get(position);
 
-    public void setClickListener(OnLayerClickListener listener) {
-        mListener = listener;
-    }
+		holder.itemView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				notifyItemChanged(selectedPosition);
+				layerClickListener.onLayerClick(layer);
+				selectedPosition = holder.getLayoutPosition();
+				notifyItemChanged(selectedPosition);
+			}
+		});
 
-    @Override
-    public LayerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layer_view_holder, parent, false);
-        return new LayerViewHolder(view);
-    }
+		holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				if (layers.size() > 1) {
+					layerClickListener.onLayerLongClick(holder);
+				}
+				return true;
+			}
+		});
 
-    @Override
-    public void onBindViewHolder(final LayerViewHolder holder, int position) {
-        final Layer layer = mLayers.get(position);
+		holder.mImageView.setImageBitmap(layer.getImage());
+		holder.itemView.setSelected(selectedPosition == position);
+	}
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListener.onLayerClick(layer);
-            }
-        });
+	public Layer get(int position) {
+		return layers.get(position);
+	}
 
-        holder.mImageView.setImageBitmap(layer.getImage());
-    }
+	public void add(Layer layer) {
+		int index = 0;
+		layers.add(0, layer);
+		selectedPosition++;
+		notifyItemInserted(index);
+	}
 
-    public Layer get(int position) {
-        return mLayers.get(position);
-    }
+	public void remove(Layer layer) {
+		int index = layers.indexOf(layer);
+		if (index >= 0) {
+			layers.remove(index);
+			notifyItemRemoved(index);
+		}
+	}
 
-    public void add(Layer layer) {
-        mLayers.add(layer);
-    }
+	@Override
+	public boolean onItemMove(int fromPosition, int toPosition) {
+		Collections.swap(layers, fromPosition, toPosition);
+		notifyItemMoved(fromPosition, toPosition);
+		return true;
+	}
 
-    public void remove(Layer layer) {
-        mLayers.remove(layer);
-    }
+	@Override
+	public void onItemDismiss(int position) {
+		remove(layers.get(position));
+		notifyItemRemoved(position);
+	}
 
-    @Override
-    public boolean onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(mLayers, fromPosition, toPosition);
-        notifyItemMoved(fromPosition, toPosition);
-        return true;
-    }
+	@Override
+	public int getItemCount() {
+		return layers.size();
+	}
 
-    @Override
-    public int getItemCount() {
-        return mLayers.size();
-    }
+	public interface OnLayerClickListener {
+		void onLayerClick(Layer layer);
 
-    public interface OnLayerClickListener {
+		void onLayerLongClick(LayerViewHolder holder);
+	}
 
-        void onLayerClick(Layer layer);
-    }
+	class LayerViewHolder extends RecyclerView.ViewHolder {
+		ImageView mImageView;
+
+		LayerViewHolder(View itemView) {
+			super(itemView);
+
+			mImageView = (ImageView) itemView.findViewById(R.id.layer_view);
+		}
+	}
 }

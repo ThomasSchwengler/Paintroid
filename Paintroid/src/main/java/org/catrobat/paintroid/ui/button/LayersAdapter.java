@@ -178,26 +178,16 @@ public class LayersAdapter extends BaseAdapter implements OnLayerEventListener {
 		return convertView;
 	}
 
-	public Layer clearLayer() {
-		if (layerList.size() >= 1) {
-			for (int i = layerList.size() - 1; i >= 0; i--) {
-				layerList.remove(i);
-			}
-		}
-		layerCounter = 0;
-		addLayer();
-		return layerList.get(0);
-	}
-
-	public void copy(int currentLayer) {
-
-		if (layerList.size() < MAX_LAYER) {
-			Bitmap image = layerList.get(getPosition(currentLayer)).getImage().copy(layerList.get(currentLayer).getImage().getConfig(), true);
-			layerList.add(0, new Layer(layerCounter, image));
-			layerCounter++;
-			notifyDataSetChanged();
-		}
-	}
+//	public Layer clearLayer() {
+//		if (layerList.size() >= 1) {
+//			for (int i = layerList.size() - 1; i >= 0; i--) {
+//				layerList.remove(i);
+//			}
+//		}
+//		layerCounter = 0;
+//		addLayer();
+//		return layerList.get(0);
+//	}
 
 	public void swapLayer(int posMarkedLayer, int targetPosition) {
 		if (posMarkedLayer >= 0 && posMarkedLayer < layerList.size()

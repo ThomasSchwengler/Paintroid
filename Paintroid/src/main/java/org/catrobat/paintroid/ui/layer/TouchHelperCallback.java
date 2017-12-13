@@ -1,39 +1,52 @@
 package org.catrobat.paintroid.ui.layer;
 
-
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
 public class TouchHelperCallback extends ItemTouchHelper.Callback {
 
-    interface TouchHelperAdapterInterface {
+	private TouchHelperAdapter adapter;
 
-        boolean onItemMove(int fromPosition, int toPosition);
-    }
+	public TouchHelperCallback(TouchHelperAdapter adapter) {
+		this.adapter = adapter;
+	}
 
-    private TouchHelperAdapterInterface adapterInterface;
+	@Override
+	public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+		final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+		final int swipeFlags = ItemTouchHelper.START;
+		return makeMovementFlags(dragFlags, swipeFlags);
+	}
 
-    public TouchHelperCallback(TouchHelperAdapterInterface adapterInterface) {
-        this.adapterInterface = adapterInterface;
-    }
+	@Override
+	public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+		return adapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+	}
 
-    @Override
-    public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-        final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-        return makeMovementFlags(dragFlags, 0);
-    }
+	@Override
+	public boolean canDropOver(RecyclerView recyclerView, RecyclerView.ViewHolder current, RecyclerView.ViewHolder target) {
+		return super.canDropOver(recyclerView, current, target);
+		//return false;
+	}
 
-    @Override
-    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-        return adapterInterface.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-    }
+	@Override
+	public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+		adapter.onItemDismiss(viewHolder.getAdapterPosition());
+	}
 
-    @Override
-    public boolean isLongPressDragEnabled() {
-        return true;
-    }
+	@Override
+	public boolean isLongPressDragEnabled() {
+		return false;
+	}
 
-    @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-    }
+	@Override
+	public boolean isItemViewSwipeEnabled() {
+		return true;
+	}
+
+	interface TouchHelperAdapter {
+		boolean onItemMove(int fromPosition, int toPosition);
+		void onItemDismiss(int position);
+//		boolean canDismissItems();
+	}
 }

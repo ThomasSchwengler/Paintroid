@@ -99,6 +99,9 @@ public class MainActivity extends NavigationDrawerMenuActivity implements Naviga
 
 	DrawingSurface drawingSurface;
 
+	public static List<Layer> layers = new ArrayList<>();
+	private LayerFragment layerFragment;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -173,6 +176,24 @@ public class MainActivity extends NavigationDrawerMenuActivity implements Naviga
 		}
 
 		if (!openedFromCatroid) {
+			Bitmap bitmap = PaintroidApplication.drawingSurface.getBitmapCopy();
+			layers.add(new Layer(0, bitmap));
+
+			layerFragment = new LayerFragment();
+			getSupportFragmentManager().beginTransaction()
+					.replace(R.id.nav_view_layer_container, layerFragment)
+					.commit();
+
+			drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+				@Override
+				public void onDrawerStateChanged(int newState) {
+					if (drawerLayout.isDrawerVisible(Gravity.END)) {
+						Log.e(PaintroidApplication.TAG, "Layer refresh!!!");
+						layerFragment.refresh();
+					}
+				}
+			});
+
 			LayerListener.init(this, layerSideNav, drawingSurface.getBitmapCopy(), false);
 		}
 
