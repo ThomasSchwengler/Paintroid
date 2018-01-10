@@ -65,6 +65,7 @@ import org.catrobat.paintroid.dialog.InfoDialog;
 import org.catrobat.paintroid.dialog.InfoDialog.DialogType;
 import org.catrobat.paintroid.dialog.colorpicker.ColorPickerDialog;
 import org.catrobat.paintroid.listener.LayerListener;
+import org.catrobat.paintroid.tools.Layer;
 import org.catrobat.paintroid.tools.Tool;
 import org.catrobat.paintroid.tools.ToolFactory;
 import org.catrobat.paintroid.tools.ToolType;
@@ -74,8 +75,11 @@ import org.catrobat.paintroid.ui.DrawingSurface;
 import org.catrobat.paintroid.ui.Perspective;
 import org.catrobat.paintroid.ui.TopBar;
 import org.catrobat.paintroid.ui.button.LayersAdapter;
+import org.catrobat.paintroid.ui.layer.LayerFragment;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.catrobat.paintroid.common.Constants.PAINTROID_PICTURE_PATH;
 import static org.catrobat.paintroid.common.Constants.TEMP_PICTURE_NAME;
@@ -181,7 +185,7 @@ public class MainActivity extends NavigationDrawerMenuActivity implements Naviga
 
 			layerFragment = new LayerFragment();
 			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.nav_view_layer_container, layerFragment)
+					.replace(R.id.nav_view_layer, layerFragment)
 					.commit();
 
 			drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {

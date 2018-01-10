@@ -319,11 +319,11 @@ public final class LayerListener implements OnRefreshLayerDialogListener, OnActi
 	}
 
 	public void resetLayer() {
-		Layer layer = layersAdapter.clearLayer();
-		selectLayer(layer);
-		PaintroidApplication.commandManager.commitAddLayerCommand(new LayerCommand(layer));
-		updateButtonResource();
-		refreshView();
+//		Layer layer = layersAdapter.clearLayer();
+//		selectLayer(layer);
+//		PaintroidApplication.commandManager.commitAddLayerCommand(new LayerCommand(layer));
+//		updateButtonResource();
+//		refreshView();
 	}
 
 	public Bitmap getBitmapOfAllLayersToSave() {
