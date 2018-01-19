@@ -42,7 +42,7 @@ import org.catrobat.paintroid.command.implementation.LayerCommand;
 import org.catrobat.paintroid.command.implementation.ResizeCommand;
 import org.catrobat.paintroid.command.implementation.RotateCommand;
 import org.catrobat.paintroid.dialog.IndeterminateProgressDialog;
-import org.catrobat.paintroid.listener.LayerListener;
+import org.catrobat.paintroid.listener.LayerHolder;
 import org.catrobat.paintroid.tools.Layer;
 import org.catrobat.paintroid.tools.ToolType;
 import org.catrobat.paintroid.ui.DrawingSurface;
@@ -225,7 +225,7 @@ public class TransformTool extends BaseToolWithRectangleShape {
 			initResizeBounds();
 			if (areResizeBordersValid()) {
 
-				for (Layer layer : LayerListener.getInstance().getAdapter().getLayers()) {
+				for (Layer layer : LayerHolder.getInstance().getLayers()) {
 					Command resizeCommand = new ResizeCommand((int) Math.floor(resizeBoundWidthXLeft),
 							(int) Math.floor(resizeBoundHeightYTop),
 							(int) Math.floor(resizeBoundWidthXRight),
@@ -248,13 +248,13 @@ public class TransformTool extends BaseToolWithRectangleShape {
 		Command command = new FlipCommand(flipDirection);
 		IndeterminateProgressDialog.getInstance().show();
 		((FlipCommand) command).addObserver(this);
-		Layer layer = LayerListener.getInstance().getCurrentLayer();
+		Layer layer = LayerHolder.getInstance().getCurrentLayer();
 		PaintroidApplication.commandManager.commitCommandToLayer(new LayerCommand(layer), command);
 	}
 
 	private void rotate(RotateCommand.RotateDirection rotateDirection) {
 		IndeterminateProgressDialog.getInstance().show();
-		for (Layer layer : LayerListener.getInstance().getAdapter().getLayers()) {
+		for (Layer layer : LayerHolder.getInstance().getLayers()) {
 			Command command = new RotateCommand(rotateDirection);
 
 			if (layer.getSelected()) {
@@ -273,7 +273,7 @@ public class TransformTool extends BaseToolWithRectangleShape {
 
 			@Override
 			protected Void doInBackground(Void... params) {
-				Rect shapeBounds = cropAlgorithmSnail(LayerListener.getInstance().getBitmapOfAllLayersToSave());
+				Rect shapeBounds = cropAlgorithmSnail(LayerHolder.getInstance().getBitmapOfAllLayersToSave());
 				if (shapeBounds != null) {
 					boxWidth = shapeBounds.width() + 1;
 					boxHeight = shapeBounds.height() + 1;

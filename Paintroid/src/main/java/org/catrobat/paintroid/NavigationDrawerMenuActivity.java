@@ -45,7 +45,7 @@ import org.catrobat.paintroid.dialog.CustomAlertDialogBuilder;
 import org.catrobat.paintroid.dialog.IndeterminateProgressDialog;
 import org.catrobat.paintroid.dialog.InfoDialog;
 import org.catrobat.paintroid.dialog.InfoDialog.DialogType;
-import org.catrobat.paintroid.listener.LayerListener;
+import org.catrobat.paintroid.listener.LayerHolder;
 import org.catrobat.paintroid.tools.Tool.StateChange;
 import org.catrobat.paintroid.tools.implementation.ImportTool;
 
@@ -85,7 +85,7 @@ public abstract class NavigationDrawerMenuActivity extends AppCompatActivity {
 	public boolean openedFromCatroid;
 
 	boolean imageHasBeenModified() {
-		return (!(LayerListener.getInstance().getAdapter().getLayers().size() == 1)
+		return (!(LayerHolder.getInstance().getLayers().size() == 1)
 				|| !isPlainImage || PaintroidApplication.commandManager.checkIfDrawn());
 	}
 
@@ -189,12 +189,12 @@ public abstract class NavigationDrawerMenuActivity extends AppCompatActivity {
 	private void onNewImage() {
 		PaintroidApplication.commandManager.resetAndClear(false);
 		initialiseNewBitmap();
-		LayerListener.getInstance().resetLayer();
+		LayerHolder.getInstance().resetLayer();
 	}
 
 	private void onNewImageFromCamera() {
 		PaintroidApplication.commandManager.resetAndClear(false);
-		LayerListener.getInstance().resetLayer();
+		LayerHolder.getInstance().resetLayer();
 		takePhoto();
 	}
 
@@ -204,7 +204,7 @@ public abstract class NavigationDrawerMenuActivity extends AppCompatActivity {
 
 		if (resultCode == Activity.RESULT_OK) {
 			PaintroidApplication.commandManager.resetAndClear(false);
-			LayerListener.getInstance().resetLayer();
+			LayerHolder.getInstance().resetLayer();
 
 			switch (requestCode) {
 				case REQUEST_CODE_LOAD_PICTURE:
@@ -224,8 +224,7 @@ public abstract class NavigationDrawerMenuActivity extends AppCompatActivity {
 			isPlainImage = false;
 			isSaved = false;
 			savedPictureUri = null;
-			LayerListener.getInstance().getCurrentLayer().setImage(PaintroidApplication.drawingSurface.getBitmapCopy());
-			LayerListener.getInstance().refreshView();
+			LayerHolder.getInstance().getCurrentLayer().setImage(PaintroidApplication.drawingSurface.getBitmapCopy());
 		}
 	}
 
@@ -291,7 +290,7 @@ public abstract class NavigationDrawerMenuActivity extends AppCompatActivity {
 	// if needed use Async Task
 	public void saveFile() {
 
-		if (!FileIO.saveBitmap(this, LayerListener.getInstance().getBitmapOfAllLayersToSave(), null, saveCopy)) {
+		if (!FileIO.saveBitmap(this, LayerHolder.getInstance().getBitmapOfAllLayersToSave(), null, saveCopy)) {
 			InfoDialog.newInstance(DialogType.WARNING,
 					R.string.dialog_error_sdcard_text,
 					R.string.dialog_error_save_title).show(
@@ -312,7 +311,7 @@ public abstract class NavigationDrawerMenuActivity extends AppCompatActivity {
 			public void run(Bitmap bitmap) {
 				Command command = new LoadCommand(bitmap);
 				PaintroidApplication.commandManager.commitCommandToLayer(
-						new LayerCommand(LayerListener.getInstance().getCurrentLayer()), command);
+						new LayerCommand(LayerHolder.getInstance().getCurrentLayer()), command);
 			}
 		});
 	}

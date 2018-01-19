@@ -19,7 +19,6 @@
 
 package org.catrobat.paintroid.ui.layer;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +59,6 @@ public class LayerAdapter extends RecyclerView.Adapter<LayerAdapter.LayerViewHol
 		holder.itemView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				notifyItemChanged(selectedPosition);
 				layerClickListener.onLayerClick(layer);
 				selectedPosition = holder.getLayoutPosition();
 				notifyItemChanged(selectedPosition);
@@ -85,6 +83,10 @@ public class LayerAdapter extends RecyclerView.Adapter<LayerAdapter.LayerViewHol
 		return layers.get(position);
 	}
 
+	public Layer getSelectedLayer() {
+		return layers.get(selectedPosition);
+	}
+
 	public void add(Layer layer) {
 		int index = 0;
 		layers.add(0, layer);
@@ -94,10 +96,14 @@ public class LayerAdapter extends RecyclerView.Adapter<LayerAdapter.LayerViewHol
 
 	public void remove(Layer layer) {
 		int index = layers.indexOf(layer);
-		if (index >= 0) {
-			layers.remove(index);
-			notifyItemRemoved(index);
-		}
+		remove(index);
+	}
+
+	private void remove(int index) {
+		layers.remove(index);
+		selectedPosition = Math.min(selectedPosition, layers.size() - 1);
+		notifyItemRemoved(index);
+		notifyItemChanged(selectedPosition);
 	}
 
 	@Override
@@ -109,8 +115,12 @@ public class LayerAdapter extends RecyclerView.Adapter<LayerAdapter.LayerViewHol
 
 	@Override
 	public void onItemDismiss(int position) {
-		remove(layers.get(position));
-		notifyItemRemoved(position);
+		remove(position);
+	}
+
+	@Override
+	public boolean canDismissItems() {
+		return layers.size() > 1;
 	}
 
 	@Override

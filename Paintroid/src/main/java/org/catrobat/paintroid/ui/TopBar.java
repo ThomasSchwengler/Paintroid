@@ -32,7 +32,7 @@ import org.catrobat.paintroid.command.UndoRedoManager;
 import org.catrobat.paintroid.command.implementation.LayerCommand;
 import org.catrobat.paintroid.dialog.colorpicker.ColorPickerDialog;
 import org.catrobat.paintroid.eventlistener.OnUpdateTopBarListener;
-import org.catrobat.paintroid.listener.LayerListener;
+import org.catrobat.paintroid.listener.LayerHolder;
 import org.catrobat.paintroid.tools.Layer;
 import org.catrobat.paintroid.tools.Tool;
 import org.catrobat.paintroid.ui.button.ColorButton;
@@ -106,7 +106,7 @@ public class TopBar extends Observable implements View.OnClickListener, OnUpdate
 	}
 
 	private LayerBitmapCommand getCurrentLayerBitmapCommand() {
-		Layer currentLayer = LayerListener.getInstance().getCurrentLayer();
+		Layer currentLayer = LayerHolder.getInstance().getCurrentLayer();
 		LayerCommand layerCommand = new LayerCommand(currentLayer);
 		return PaintroidApplication.commandManager.getLayerBitmapCommand(layerCommand);
 	}

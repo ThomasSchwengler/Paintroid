@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  *  Paintroid: An image manipulation application for Android.
  *  Copyright (C) 2010-2015 The Catrobat Team
  *  (<http://developer.catrobat.org/credits>)
@@ -17,49 +16,42 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/custom_background_color">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/layer_button_add"
+        style="?borderlessButtonStyle"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:contentDescription="@string/layer_new"
+        android:padding="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/layer_new_button_selector"
+        android:theme="@style/HighlightColorTheme" />
 
-        <ImageButton
-            android:id="@+id/layer_button_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="0dp"
-            android:src="@drawable/icon_layers_new"
-            android:contentDescription="@string/layer_new"
-            style="?android:attr/borderlessButtonStyle" />
-
-        <ImageButton
-            android:id="@+id/layer_button_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/icon_layers_delete"
-            android:contentDescription="@string/layer_delete"
-            style="?android:attr/borderlessButtonStyle" />
-
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/layer_button_delete"
+        style="?borderlessButtonStyle"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/layer_button_add"
+        android:contentDescription="@string/layer_delete"
+        android:padding="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/layer_delete_button_selector"
+        android:theme="@style/HighlightColorTheme" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layer_button_add"
         android:scaleType="fitStart"
         app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/layer_view_holder">
-    </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+        tools:listitem="@layout/layer_view_holder"/>
+</RelativeLayout>
 

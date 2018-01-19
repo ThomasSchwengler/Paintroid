@@ -25,7 +25,6 @@ import android.support.test.rule.ActivityTestRule;
 
 import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.command.UndoRedoManager;
-import org.catrobat.paintroid.listener.LayerListener;
 import org.junit.Rule;
 import org.junit.Test;
 

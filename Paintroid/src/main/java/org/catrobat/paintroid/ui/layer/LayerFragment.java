@@ -21,66 +21,90 @@ package org.catrobat.paintroid.ui.layer;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.command.UndoRedoManager;
+import org.catrobat.paintroid.listener.LayerHolder;
 import org.catrobat.paintroid.tools.Layer;
 import org.catrobat.paintroid.ui.DrawingSurface;
 
 public class LayerFragment extends Fragment implements LayerAdapter.OnLayerClickListener {
 
+	public static final int MAX_LAYER_COUNT = 4;
 	private LayerAdapter adapter;
-	private Layer currentLayer;
+	private Layer selectedLayer;
 	private ItemTouchHelper itemTouchHelper;
 
-	private int layerIdCounter = 0;
 	private String TAG = LayerFragment.class.getSimpleName();
+	private View addButton;
+	private View deleteButton;
+	private RecyclerView.AdapterDataObserver observer;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
-		adapter = new LayerAdapter(MainActivity.layers);
-		adapter.setClickListener(this);
+		super.onCreate(savedInstanceState);
+		adapter = new LayerAdapter(LayerHolder.getInstance().getLayers());
 
 		selectLayer(adapter.get(0));
+		observer = new LayerAdapterDataObserver();
+	}
 
-		super.onCreate(savedInstanceState);
+	@Override
+	public void onResume() {
+		super.onResume();
+		adapter.setClickListener(this);
+		adapter.registerAdapterDataObserver(observer);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		adapter.setClickListener(null);
+		adapter.unregisterAdapterDataObserver(observer);
+	}
+
+	private void updateButtonStatus() {
+		int itemCount = adapter.getItemCount();
+		addButton.setEnabled(itemCount < MAX_LAYER_COUNT);
+		deleteButton.setEnabled(itemCount > 1);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.layer_dialog, container, false);
 
-		view.findViewById(R.id.layer_button_add).setOnClickListener(new View.OnClickListener() {
+		addButton = view.findViewById(R.id.layer_button_add);
+		addButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				//TODO: ADD new Layer
 				if (adapter.getItemCount() < 4) {
-					Toast.makeText(getContext(), "add", Toast.LENGTH_SHORT).show();
 					DrawingSurface drawingSurface = PaintroidApplication.drawingSurface;
 					Bitmap image = Bitmap.createBitmap(drawingSurface.getBitmapWidth(),
 							drawingSurface.getBitmapHeight(), Bitmap.Config.ARGB_8888);
-					adapter.add(new Layer(layerIdCounter++, image));
+					adapter.add(LayerHolder.getInstance().createLayer(image));
 				}
 			}
 		});
 
-		view.findViewById(R.id.layer_button_delete).setOnClickListener(new View.OnClickListener() {
+		deleteButton = view.findViewById(R.id.layer_button_delete);
+		deleteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Toast.makeText(getContext(), "delete", Toast.LENGTH_SHORT).show();
 				if (adapter.getItemCount() > 1) {
-					adapter.remove(currentLayer);
+					adapter.remove(selectedLayer);
 				}
 			}
 		});
@@ -98,18 +122,19 @@ public class LayerFragment extends Fragment implements LayerAdapter.OnLayerClick
 	public void selectLayer(Layer layer) {
 		Log.e(TAG, "selectLayer");
 		final DrawingSurface drawingSurface = PaintroidApplication.drawingSurface;
-		if (currentLayer != null) {
-			currentLayer.setSelected(false);
-			currentLayer.setImage(drawingSurface.getBitmapCopy());
+		if (selectedLayer != null) {
+			selectedLayer.setSelected(false);
+			selectedLayer.setImage(drawingSurface.getBitmapCopy());
 			adapter.notifyDataSetChanged();
 		}
 
-		currentLayer = layer;
-		currentLayer.setSelected(true);
+		selectedLayer = layer;
+		selectedLayer.setSelected(true);
+//		LayerHolder.getInstance().setCurrentLayer(selectedLayer);
 
-		drawingSurface.setLock(currentLayer.getLocked());
-		drawingSurface.setVisible(currentLayer.getVisible());
-		drawingSurface.setBitmap(currentLayer.getImage());
+		drawingSurface.setLock(selectedLayer.getLocked());
+		drawingSurface.setVisible(selectedLayer.getVisible());
+		drawingSurface.setBitmap(selectedLayer.getImage());
 	}
 
 	public void refresh() {
@@ -125,5 +150,38 @@ public class LayerFragment extends Fragment implements LayerAdapter.OnLayerClick
 	@Override
 	public void onLayerLongClick(LayerAdapter.LayerViewHolder holder) {
 		itemTouchHelper.startDrag(holder);
+	}
+
+	private class LayerAdapterDataObserver extends RecyclerView.AdapterDataObserver {
+		private void refreshDrawingSurface() {
+			PaintroidApplication.drawingSurface.refreshDrawingSurface();
+		}
+
+		@Override
+		public void onChanged() {
+			refreshDrawingSurface();
+			updateButtonStatus();
+			selectedLayer = adapter.getSelectedLayer();
+//			LayerHolder.getInstance().setCurrentLayer(selectedLayer);
+		}
+
+		@Override
+		public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+			refreshDrawingSurface();
+		}
+
+		@Override
+		public void onItemRangeInserted(int positionStart, int itemCount) {
+			refreshDrawingSurface();
+			updateButtonStatus();
+		}
+
+		@Override
+		public void onItemRangeRemoved(int positionStart, int itemCount) {
+			refreshDrawingSurface();
+			updateButtonStatus();
+			selectedLayer = adapter.getSelectedLayer();
+//			LayerHolder.getInstance().setCurrentLayer(selectedLayer);
+		}
 	}
 }

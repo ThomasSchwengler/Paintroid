@@ -32,7 +32,7 @@ import org.catrobat.paintroid.command.implementation.LayerCommand;
 import org.catrobat.paintroid.command.implementation.PathCommand;
 import org.catrobat.paintroid.command.implementation.PointCommand;
 import org.catrobat.paintroid.listener.BrushPickerView;
-import org.catrobat.paintroid.listener.LayerListener;
+import org.catrobat.paintroid.listener.LayerHolder;
 import org.catrobat.paintroid.tools.Layer;
 import org.catrobat.paintroid.tools.ToolType;
 
@@ -139,7 +139,7 @@ public class DrawTool extends BaseTool {
 			PaintroidApplication.currentTool.resetInternalState(StateChange.RESET_INTERNAL_STATE);
 			return false;
 		}
-		Layer layer = LayerListener.getInstance().getCurrentLayer();
+		Layer layer = LayerHolder.getInstance().getCurrentLayer();
 		Command command = new PathCommand(BITMAP_PAINT, pathToDraw);
 		PaintroidApplication.commandManager.commitCommandToLayer(new LayerCommand(layer), command);
 		return true;
@@ -150,7 +150,7 @@ public class DrawTool extends BaseTool {
 			PaintroidApplication.currentTool.resetInternalState(StateChange.RESET_INTERNAL_STATE);
 			return false;
 		}
-		Layer layer = LayerListener.getInstance().getCurrentLayer();
+		Layer layer = LayerHolder.getInstance().getCurrentLayer();
 		Command command = new PointCommand(BITMAP_PAINT, coordinate);
 		PaintroidApplication.commandManager.commitCommandToLayer(new LayerCommand(layer), command);
 		return true;

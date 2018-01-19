@@ -26,7 +26,7 @@ import org.catrobat.paintroid.command.LayerBitmapCommand;
 import org.catrobat.paintroid.eventlistener.OnActiveLayerChangedListener;
 import org.catrobat.paintroid.eventlistener.OnLayerEventListener;
 import org.catrobat.paintroid.eventlistener.OnUpdateTopBarListener;
-import org.catrobat.paintroid.listener.LayerListener;
+import org.catrobat.paintroid.listener.LayerHolder;
 import org.catrobat.paintroid.tools.Layer;
 
 import java.util.ArrayList;
@@ -134,7 +134,7 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 			layerCommand.setLayersBitmapCommands(result);
 
 			int id = layerCommand.getLayer().getLayerID();
-			int pos = LayerListener.getInstance().getAdapter().getPosition(id);
+			int pos = LayerHolder.getInstance().getPosition(id);
 			layerCommand.setOldLayerPosition(pos);
 
 			drawBitmapCommandsAtLayer.remove(result.get(0));
@@ -301,15 +301,13 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 		if (command.getLayerCommandType() == CommandType.REMOVE_LAYER) {
 			command.getLayersBitmapCommands().get(0).getLayerUndoCommands().add(command);
 		}
-		LayerListener.getInstance().updateButtonResource();
 	}
 
 	private void handleRemoveLayer(LayerCommand command) {
 		drawBitmapCommandsAtLayer.remove(command.getLayersBitmapCommands().get(0));
 		removeLayer(command.getLayer());
-		int pos = LayerListener.getInstance().getAdapter().getLayers().size() - 1;
-		changeActiveLayer(LayerListener.getInstance().getAdapter().getLayers().get(pos));
-		LayerListener.getInstance().updateButtonResource();
+		int pos = LayerHolder.getInstance().getLayers().size() - 1;
+		changeActiveLayer(LayerHolder.getInstance().getLayers().get(pos));
 	}
 
 	/**
@@ -334,7 +332,6 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		changeActiveLayer(command.getLayer());
 		drawingSurfaceRedraw();
-		LayerListener.getInstance().updateButtonResource();
 	}
 
 	/**
@@ -364,9 +361,8 @@ public class CommandManagerImplementation implements CommandManager, Observer {
 
 		command.setLayersBitmapCommands(result);
 
-		changeActiveLayer(LayerListener.getInstance().getAdapter().getLayers().get(0));
+		changeActiveLayer(LayerHolder.getInstance().getLayers().get(0));
 		drawingSurfaceRedraw();
-		LayerListener.getInstance().updateButtonResource();
 	}
 
 	@Override

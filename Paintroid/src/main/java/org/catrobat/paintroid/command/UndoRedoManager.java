@@ -30,7 +30,7 @@ import org.catrobat.paintroid.command.implementation.LayerCommand;
 import org.catrobat.paintroid.command.implementation.ResizeCommand;
 import org.catrobat.paintroid.command.implementation.RotateCommand;
 import org.catrobat.paintroid.dialog.IndeterminateProgressDialog;
-import org.catrobat.paintroid.listener.LayerListener;
+import org.catrobat.paintroid.listener.LayerHolder;
 import org.catrobat.paintroid.tools.Layer;
 import org.catrobat.paintroid.tools.Tool;
 
@@ -52,7 +52,7 @@ public final class UndoRedoManager {
 	}
 
 	private static void undoResizeCommand(Layer undoLayer, ResizeCommand undoCommand) {
-		for (Layer layer : LayerListener.getInstance().getAdapter().getLayers()) {
+		for (Layer layer : LayerHolder.getInstance().getLayers()) {
 			if (layer == undoLayer) {
 				continue;
 			}
@@ -66,7 +66,7 @@ public final class UndoRedoManager {
 				Command lastCommand = layerCommands.get(indexOfLastElement);
 				if (lastCommand instanceof ResizeCommand) {
 					layerBitmapCommand.addCommandToUndoList();
-					LayerListener.getInstance().selectLayer(layer);
+					LayerHolder.getInstance().setCurrentLayer(layer);
 					layerBitmapCommand.clearLayerBitmap();
 					layerBitmapCommand.runAllCommands();
 					continue;
@@ -89,12 +89,12 @@ public final class UndoRedoManager {
 		}
 
 		if (!undoLayer.getSelected()) {
-			LayerListener.getInstance().selectLayer(undoLayer);
+			LayerHolder.getInstance().setCurrentLayer(undoLayer);
 		}
 	}
 
 	private static void redoResizeCommand(Layer redoLayer, ResizeCommand redoCommand) {
-		for (Layer layer : LayerListener.getInstance().getAdapter().getLayers()) {
+		for (Layer layer : LayerHolder.getInstance().getLayers()) {
 			if (layer == redoLayer) {
 				continue;
 			}
@@ -124,7 +124,7 @@ public final class UndoRedoManager {
 	}
 
 	private static void undoRotateCommand(Layer undoLayer, RotateCommand undoCommand) {
-		for (Layer layer : LayerListener.getInstance().getAdapter().getLayers()) {
+		for (Layer layer : LayerHolder.getInstance().getLayers()) {
 			if (layer == undoLayer) {
 				continue;
 			}
@@ -138,7 +138,7 @@ public final class UndoRedoManager {
 				Command lastCommand = layerCommands.get(indexOfLastElement);
 				if (lastCommand instanceof RotateCommand) {
 					layerBitmapCommand.addCommandToUndoList();
-					LayerListener.getInstance().selectLayer(layer);
+					LayerHolder.getInstance().setCurrentLayer(layer);
 					layerBitmapCommand.clearLayerBitmap();
 					layerBitmapCommand.runAllCommands();
 					continue;
@@ -159,12 +159,12 @@ public final class UndoRedoManager {
 		}
 
 		if (!undoLayer.getSelected()) {
-			LayerListener.getInstance().selectLayer(undoLayer);
+			LayerHolder.getInstance().setCurrentLayer(undoLayer);
 		}
 	}
 
 	private static void redoRotateCommand(Layer redoLayer, RotateCommand redoCommand) {
-		for (Layer layer : LayerListener.getInstance().getAdapter().getLayers()) {
+		for (Layer layer : LayerHolder.getInstance().getLayers()) {
 			if (layer == redoLayer) {
 				continue;
 			}
@@ -190,7 +190,7 @@ public final class UndoRedoManager {
 	public void performUndo() {
 		final CommandManager commandManager = PaintroidApplication.commandManager;
 		synchronized (commandManager.getDrawBitmapCommandsAtLayer()) {
-			final Layer layer = LayerListener.getInstance().getCurrentLayer();
+			final Layer layer = LayerHolder.getInstance().getCurrentLayer();
 			LayerCommand layerCommand = new LayerCommand(layer);
 			final LayerBitmapCommand layerBitmapCommand = commandManager.getLayerBitmapCommand(layerCommand);
 
@@ -272,7 +272,6 @@ public final class UndoRedoManager {
 				protected void onPostExecute(Void result) {
 					PaintroidApplication.currentTool.resetInternalState(Tool.StateChange.RESET_INTERNAL_STATE);
 					update();
-					LayerListener.getInstance().refreshView();
 					PaintroidApplication.drawingSurface.refreshDrawingSurface();
 					NavigationDrawerMenuActivity.isSaved = false;
 					IndeterminateProgressDialog.getInstance().dismiss();
@@ -286,7 +285,7 @@ public final class UndoRedoManager {
 	}
 
 	public void performRedo() {
-		final Layer layer = LayerListener.getInstance().getCurrentLayer();
+		final Layer layer = LayerHolder.getInstance().getCurrentLayer();
 		LayerCommand layerCommand = new LayerCommand(layer);
 		final CommandManager commandManager = PaintroidApplication.commandManager;
 		LayerBitmapCommand layerBitmapCommand = commandManager.getLayerBitmapCommand(layerCommand);
@@ -370,7 +369,6 @@ public final class UndoRedoManager {
 			protected void onPostExecute(Void result) {
 				PaintroidApplication.currentTool.resetInternalState(Tool.StateChange.RESET_INTERNAL_STATE);
 				update();
-				LayerListener.getInstance().refreshView();
 				PaintroidApplication.drawingSurface.refreshDrawingSurface();
 				NavigationDrawerMenuActivity.isSaved = false;
 				IndeterminateProgressDialog.getInstance().dismiss();
@@ -383,7 +381,7 @@ public final class UndoRedoManager {
 	}
 
 	public void update() {
-		Layer currentLayer = LayerListener.getInstance().getCurrentLayer();
+		Layer currentLayer = LayerHolder.getInstance().getCurrentLayer();
 		LayerCommand layerCommand = new LayerCommand(currentLayer);
 		LayerBitmapCommand layerBitmapCommand = PaintroidApplication.commandManager
 				.getLayerBitmapCommand(layerCommand);

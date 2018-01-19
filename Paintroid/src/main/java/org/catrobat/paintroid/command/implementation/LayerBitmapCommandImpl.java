@@ -14,7 +14,7 @@ import org.catrobat.paintroid.PaintroidApplication;
 import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.command.LayerBitmapCommand;
 import org.catrobat.paintroid.dialog.IndeterminateProgressDialog;
-import org.catrobat.paintroid.listener.LayerListener;
+import org.catrobat.paintroid.listener.LayerHolder;
 import org.catrobat.paintroid.tools.Layer;
 import org.catrobat.paintroid.tools.Tool;
 
@@ -61,7 +61,6 @@ public class LayerBitmapCommandImpl implements LayerBitmapCommand {
 				@Override
 				protected void onPostExecute(Void result) {
 					PaintroidApplication.currentTool.resetInternalState(Tool.StateChange.RESET_INTERNAL_STATE);
-					LayerListener.getInstance().refreshView();
 					PaintroidApplication.drawingSurface.refreshDrawingSurface();
 					NavigationDrawerMenuActivity.isSaved = false;
 					IndeterminateProgressDialog.getInstance().dismiss();
@@ -125,7 +124,6 @@ public class LayerBitmapCommandImpl implements LayerBitmapCommand {
 				commandList.addLast(command);
 				command.run(PaintroidApplication.drawingSurface.getCanvas(), layer);
 				PaintroidApplication.currentTool.resetInternalState(Tool.StateChange.RESET_INTERNAL_STATE);
-				LayerListener.getInstance().refreshView();
 			}
 		}
 	}

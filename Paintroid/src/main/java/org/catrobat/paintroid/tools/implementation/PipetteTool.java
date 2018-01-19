@@ -25,7 +25,7 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 
 import org.catrobat.paintroid.dialog.colorpicker.ColorPickerDialog;
-import org.catrobat.paintroid.listener.LayerListener;
+import org.catrobat.paintroid.listener.LayerHolder;
 import org.catrobat.paintroid.tools.ToolType;
 
 public class PipetteTool extends BaseTool {
@@ -75,7 +75,7 @@ public class PipetteTool extends BaseTool {
 	}
 
 	public void updateSurfaceBitmap() {
-		surfaceBitmap = LayerListener.getInstance().getBitmapOfAllLayersToSave();
+		surfaceBitmap = LayerHolder.getInstance().getBitmapOfAllLayersToSave();
 	}
 
 	@Override
