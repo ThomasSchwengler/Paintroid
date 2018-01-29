@@ -19,7 +19,10 @@
 
 package org.catrobat.paintroid.ui.layer;
 
+import android.content.ClipData;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,16 +65,6 @@ public class LayerAdapter extends RecyclerView.Adapter<LayerAdapter.LayerViewHol
 				layerClickListener.onLayerClick(layer);
 				selectedPosition = holder.getLayoutPosition();
 				notifyItemChanged(selectedPosition);
-			}
-		});
-
-		holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-			@Override
-			public boolean onLongClick(View v) {
-				if (layers.size() > 1) {
-					layerClickListener.onLayerLongClick(holder);
-				}
-				return true;
 			}
 		});
 
@@ -124,14 +117,17 @@ public class LayerAdapter extends RecyclerView.Adapter<LayerAdapter.LayerViewHol
 	}
 
 	@Override
+	public boolean canMoveItems() {
+		return layers.size() > 1;
+	}
+
+	@Override
 	public int getItemCount() {
 		return layers.size();
 	}
 
 	public interface OnLayerClickListener {
 		void onLayerClick(Layer layer);
-
-		void onLayerLongClick(LayerViewHolder holder);
 	}
 
 	class LayerViewHolder extends RecyclerView.ViewHolder {

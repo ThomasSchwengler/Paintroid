@@ -1,7 +1,6 @@
 package org.catrobat.paintroid.ui.layer;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
@@ -32,7 +31,7 @@ public class TouchHelperCallback extends ItemTouchHelper.Callback {
 
 	@Override
 	public boolean isLongPressDragEnabled() {
-		return false;
+		return adapter.canMoveItems();
 	}
 
 	@Override
@@ -43,6 +42,10 @@ public class TouchHelperCallback extends ItemTouchHelper.Callback {
 			dY = 0;
 		} else if (bottomY > recyclerView.getHeight()) {
 			dY = recyclerView.getHeight() - viewHolder.itemView.getHeight() - viewHolder.itemView.getTop();
+		}
+		if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+			float alpha = 1 - (Math.abs(dX) / recyclerView.getWidth());
+			viewHolder.itemView.setAlpha(alpha);
 		}
 		super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 	}
@@ -58,5 +61,7 @@ public class TouchHelperCallback extends ItemTouchHelper.Callback {
 		void onItemDismiss(int position);
 
 		boolean canDismissItems();
+
+		boolean canMoveItems();
 	}
 }
