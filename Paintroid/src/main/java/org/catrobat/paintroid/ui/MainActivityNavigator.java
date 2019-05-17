@@ -60,13 +60,24 @@ public class MainActivityNavigator implements MainActivityContracts.Navigator {
 
 	@Override
 	public void showColorPickerDialog() {
-		FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
-		Fragment fragment = fragmentManager.findFragmentByTag(Constants.COLOR_PICKER_DIALOG_TAG);
-		if (fragment == null) {
-			ColorPickerDialog dialog = ColorPickerDialog.newInstance(toolReference.get().getDrawPaint().getColor());
+		if (findFragmentByTag(Constants.COLOR_PICKER_DIALOG_TAG) == null) {
+			ColorPickerDialog dialog = ColorPickerDialog.newInstance(toolReference.get().getDrawPaint().getColor(), true);
 			setupColorPickerDialogListeners(dialog);
-			dialog.show(fragmentManager, Constants.COLOR_PICKER_DIALOG_TAG);
+			showFragment(dialog, Constants.COLOR_PICKER_DIALOG_TAG);
 		}
+	}
+
+	private void showFragment(Fragment fragment, String tag) {
+		FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
+		fragmentManager.beginTransaction()
+				.setCustomAnimations(R.anim.slide_to_top, R.anim.slide_to_bottom, R.anim.slide_to_top, R.anim.slide_to_bottom)
+				.addToBackStack(null)
+				.add(R.id.fragment_container, fragment, tag)
+				.commit();
+	}
+
+	private Fragment findFragmentByTag(String tag) {
+		return mainActivity.getSupportFragmentManager().findFragmentByTag(tag);
 	}
 
 	private void setupColorPickerDialogListeners(ColorPickerDialog dialog) {
@@ -101,14 +112,9 @@ public class MainActivityNavigator implements MainActivityContracts.Navigator {
 		about.show(mainActivity.getSupportFragmentManager(), Constants.ABOUT_DIALOG_FRAGMENT_TAG);
 	}
 
-	private Fragment getIndeterminateProgressFragment() {
-		FragmentManager supportFragmentManager = mainActivity.getSupportFragmentManager();
-		return supportFragmentManager.findFragmentByTag(Constants.INDETERMINATE_FRAGMENT_TAG);
-	}
-
 	@Override
 	public void showIndeterminateProgressDialog() {
-		Fragment fragment = getIndeterminateProgressFragment();
+		Fragment fragment = findFragmentByTag(Constants.INDETERMINATE_FRAGMENT_TAG);
 		if (fragment == null) {
 			AppCompatDialogFragment dialog = IndeterminateProgressDialog.newInstance();
 			dialog.show(mainActivity.getSupportFragmentManager(), Constants.INDETERMINATE_FRAGMENT_TAG);
@@ -117,7 +123,7 @@ public class MainActivityNavigator implements MainActivityContracts.Navigator {
 
 	@Override
 	public void dismissIndeterminateProgressDialog() {
-		Fragment fragment = getIndeterminateProgressFragment();
+		Fragment fragment = findFragmentByTag(Constants.INDETERMINATE_FRAGMENT_TAG);
 		if (fragment != null) {
 			AppCompatDialogFragment dialog = (AppCompatDialogFragment) fragment;
 			dialog.dismissAllowingStateLoss();
@@ -161,8 +167,7 @@ public class MainActivityNavigator implements MainActivityContracts.Navigator {
 
 	@Override
 	public boolean doIHavePermission(String permission) {
-		return ContextCompat.checkSelfPermission(mainActivity,
-				permission) == PackageManager.PERMISSION_GRANTED;
+		return ContextCompat.checkSelfPermission(mainActivity, permission) == PackageManager.PERMISSION_GRANTED;
 	}
 
 	@Override
@@ -209,8 +214,7 @@ public class MainActivityNavigator implements MainActivityContracts.Navigator {
 
 	@Override
 	public void restoreFragmentListeners() {
-		FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
-		Fragment fragment = fragmentManager.findFragmentByTag(Constants.COLOR_PICKER_DIALOG_TAG);
+		Fragment fragment = findFragmentByTag(Constants.COLOR_PICKER_DIALOG_TAG);
 		if (fragment != null) {
 			setupColorPickerDialogListeners((ColorPickerDialog) fragment);
 		}
