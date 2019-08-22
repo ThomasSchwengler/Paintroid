@@ -19,9 +19,9 @@
 
 package org.catrobat.paintroid.tools;
 
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IdRes;
-import android.support.annotation.StringRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.StringRes;
 
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.tools.Tool.StateChange;

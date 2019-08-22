@@ -19,8 +19,9 @@
 
 package org.catrobat.paintroid.test.espresso.util;
 
-import android.support.test.espresso.action.CoordinatesProvider;
 import android.view.View;
+
+import androidx.test.espresso.action.CoordinatesProvider;
 
 import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.tools.Workspace;

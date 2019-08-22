@@ -28,8 +28,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader.TileMode;
-import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
+
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import org.catrobat.paintroid.R;
 

@@ -23,7 +23,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.test.InstrumentationRegistry;
+
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.catrobat.paintroid.command.implementation.BaseCommand;
 import org.catrobat.paintroid.contract.LayerContracts;
@@ -58,7 +59,7 @@ public class BaseCommandTest {
 
 	@Test
 	public void testFreeResources() throws Exception {
-		File cacheDir = InstrumentationRegistry.getTargetContext().getCacheDir();
+		File cacheDir = InstrumentationRegistry.getInstrumentation().getTargetContext().getCacheDir();
 		File storedBitmap = new File(cacheDir, "test");
 
 		assertFalse(storedBitmap.exists());
@@ -114,7 +115,7 @@ public class BaseCommandTest {
 		}
 
 		public void storeBitmapStub() {
-			storeBitmap(InstrumentationRegistry.getTargetContext().getCacheDir());
+			storeBitmap(InstrumentationRegistry.getInstrumentation().getTargetContext().getCacheDir());
 		}
 	}
 }

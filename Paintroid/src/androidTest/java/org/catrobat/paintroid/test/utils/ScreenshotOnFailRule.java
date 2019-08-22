@@ -23,8 +23,9 @@ import android.app.UiAutomation;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Environment;
-import android.support.test.InstrumentationRegistry;
 import android.util.Log;
+
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
@@ -58,7 +59,7 @@ public class ScreenshotOnFailRule extends TestWatcher {
 		}
 
 		File path = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-				+ "/screenshots/" + InstrumentationRegistry.getTargetContext().getPackageName());
+				+ "/screenshots/" + InstrumentationRegistry.getInstrumentation().getTargetContext().getPackageName());
 		if (!path.exists() && !path.mkdirs()) {
 			Log.e(LOG_TAG, "failed to create screenshot path");
 		}

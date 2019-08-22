@@ -21,7 +21,8 @@ package org.catrobat.paintroid.tools.helper;
 
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.support.annotation.VisibleForTesting;
+
+import androidx.annotation.VisibleForTesting;
 
 import java.util.LinkedList;
 import java.util.Queue;

@@ -21,7 +21,6 @@ package org.catrobat.paintroid.ui.tools;
 
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
-import android.support.annotation.VisibleForTesting;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -32,6 +31,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+
+import androidx.annotation.VisibleForTesting;
 
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.tools.helper.DefaultNumberRangeFilter;

@@ -27,7 +27,8 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.support.annotation.VisibleForTesting;
+
+import androidx.annotation.VisibleForTesting;
 
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.command.Command;

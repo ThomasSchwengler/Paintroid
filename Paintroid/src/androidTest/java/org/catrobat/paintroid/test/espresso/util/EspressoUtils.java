@@ -23,13 +23,14 @@ import android.app.Activity;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.PointF;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.ViewInteraction;
-import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import android.support.test.runner.lifecycle.Stage;
 import android.util.DisplayMetrics;
 import android.view.View;
+
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
+import androidx.test.runner.lifecycle.Stage;
 
 import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.common.Constants;
@@ -39,10 +40,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 
 import static org.catrobat.paintroid.test.espresso.util.UiMatcher.isToast;
 import static org.junit.Assert.assertNotEquals;
@@ -71,7 +72,7 @@ public final class EspressoUtils {
 	 */
 	@Deprecated
 	public static float getActionbarHeight() {
-		Resources resources = InstrumentationRegistry.getTargetContext().getResources();
+		Resources resources = InstrumentationRegistry.getInstrumentation().getTargetContext().getResources();
 		DisplayMetrics metrics = resources.getDisplayMetrics();
 		return (Constants.ACTION_BAR_HEIGHT * metrics.density);
 	}
@@ -81,7 +82,7 @@ public final class EspressoUtils {
 	 */
 	@Deprecated
 	public static float getStatusbarHeight() {
-		Resources resources = InstrumentationRegistry.getTargetContext().getResources();
+		Resources resources = InstrumentationRegistry.getInstrumentation().getTargetContext().getResources();
 		int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
 		assertNotEquals(0, resourceId);
 		return resources.getDimensionPixelSize(resourceId);
@@ -124,6 +125,6 @@ public final class EspressoUtils {
 	}
 
 	public static Configuration getConfiguration() {
-		return InstrumentationRegistry.getTargetContext().getResources().getConfiguration();
+		return InstrumentationRegistry.getInstrumentation().getTargetContext().getResources().getConfiguration();
 	}
 }

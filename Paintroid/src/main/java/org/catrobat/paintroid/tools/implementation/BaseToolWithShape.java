@@ -24,8 +24,9 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Bundle;
-import android.support.annotation.VisibleForTesting;
 import android.util.DisplayMetrics;
+
+import androidx.annotation.VisibleForTesting;
 
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.command.CommandManager;

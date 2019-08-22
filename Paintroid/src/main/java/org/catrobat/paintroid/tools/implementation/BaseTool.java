@@ -26,10 +26,11 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Shader;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
+
+import androidx.annotation.ColorInt;
 
 import org.catrobat.paintroid.command.CommandFactory;
 import org.catrobat.paintroid.command.CommandManager;

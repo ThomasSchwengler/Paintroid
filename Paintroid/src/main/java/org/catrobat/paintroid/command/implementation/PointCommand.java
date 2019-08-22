@@ -22,7 +22,8 @@ package org.catrobat.paintroid.command.implementation;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.support.annotation.VisibleForTesting;
+
+import androidx.annotation.VisibleForTesting;
 
 import org.catrobat.paintroid.command.Command;
 import org.catrobat.paintroid.contract.LayerContracts;

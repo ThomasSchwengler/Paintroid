@@ -22,7 +22,8 @@ package org.catrobat.paintroid.ui;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.Rect;
-import android.support.annotation.VisibleForTesting;
+
+import androidx.annotation.VisibleForTesting;
 
 import org.catrobat.paintroid.common.Constants;
 

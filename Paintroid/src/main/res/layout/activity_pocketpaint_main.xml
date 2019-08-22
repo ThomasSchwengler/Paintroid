@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pocketpaint_drawer_layout"
     android:layout_width="match_parent"
@@ -77,7 +77,7 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <android.support.design.widget.NavigationView
+    <com.google.android.material.navigation.NavigationView
         android:id="@+id/pocketpaint_nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -85,15 +85,15 @@
         app:headerLayout="@layout/pocketpaint_layout_nav_header"
         app:menu="@menu/menu_pocketpaint_activity"
         android:background="@color/pocketpaint_main_navigation_drawer_background">
-    </android.support.design.widget.NavigationView>
+    </com.google.android.material.navigation.NavigationView>
 
-    <android.support.design.widget.NavigationView
+    <com.google.android.material.navigation.NavigationView
         android:id="@+id/pocketpaint_nav_view_layer"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center">
 
         <include layout="@layout/pocketpaint_layout_main_menu_layer" />
-    </android.support.design.widget.NavigationView>
+    </com.google.android.material.navigation.NavigationView>
 
-</android.support.v4.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

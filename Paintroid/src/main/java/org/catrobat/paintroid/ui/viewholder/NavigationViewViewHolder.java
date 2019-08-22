@@ -19,9 +19,10 @@
 
 package org.catrobat.paintroid.ui.viewholder;
 
-import android.support.design.widget.NavigationView;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.contract.MainActivityContracts;

@@ -22,9 +22,9 @@ package org.catrobat.paintroid.test.espresso.util.wrappers;
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.tools.implementation.ShapeTool;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 public final class ShapeToolOptionsViewInteraction extends CustomViewInteraction {
 	private ShapeToolOptionsViewInteraction() {

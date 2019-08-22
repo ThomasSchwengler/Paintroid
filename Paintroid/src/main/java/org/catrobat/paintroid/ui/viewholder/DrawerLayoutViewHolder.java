@@ -19,7 +19,7 @@
 
 package org.catrobat.paintroid.ui.viewholder;
 
-import android.support.v4.widget.DrawerLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import org.catrobat.paintroid.contract.MainActivityContracts;
 

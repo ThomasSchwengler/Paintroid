@@ -26,13 +26,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.view.GravityCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
 
 import org.catrobat.paintroid.BuildConfig;
 import org.catrobat.paintroid.MainActivity;

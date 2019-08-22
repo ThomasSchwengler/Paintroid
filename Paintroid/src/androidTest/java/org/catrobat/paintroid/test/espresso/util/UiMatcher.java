@@ -28,12 +28,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.StateListDrawable;
-import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.Root;
-import android.support.test.espresso.ViewAssertion;
-import android.support.test.espresso.matcher.BoundedMatcher;
-import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.test.espresso.util.HumanReadables;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -44,11 +38,18 @@ import android.widget.SeekBar;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.Root;
+import androidx.test.espresso.ViewAssertion;
+import androidx.test.espresso.matcher.BoundedMatcher;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.espresso.util.HumanReadables;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
+import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -453,7 +454,7 @@ public final class UiMatcher {
 	/**
 	 * Matches {@link Root}s that are toasts (i.e. is not a window of the currently resumed activity).
 	 *
-	 * @see android.support.test.espresso.matcher.RootMatchers#isDialog()
+	 * @see androidx.test.espresso.matcher.RootMatchers#isDialog()
 	 */
 	public static Matcher<Root> isToast() {
 		return new TypeSafeMatcher<Root>() {

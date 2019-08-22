@@ -23,9 +23,10 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.PointF;
 import android.os.Looper;
-import android.support.test.InstrumentationRegistry;
 import android.util.DisplayMetrics;
 import android.view.ViewConfiguration;
+
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.catrobat.paintroid.command.CommandManager;
 import org.catrobat.paintroid.tools.ContextCallback;

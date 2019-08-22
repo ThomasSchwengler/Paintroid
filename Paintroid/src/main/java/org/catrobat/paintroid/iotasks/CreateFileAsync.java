@@ -20,8 +20,9 @@
 package org.catrobat.paintroid.iotasks;
 
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import org.catrobat.paintroid.FileIO;
 

@@ -1,8 +1,9 @@
 package org.catrobat.paintroid.contract;
 
 import android.graphics.Bitmap;
-import android.support.annotation.StringRes;
 import android.view.View;
+
+import androidx.annotation.StringRes;
 
 import java.util.List;
 import java.util.ListIterator;

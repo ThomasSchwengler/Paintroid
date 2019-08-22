@@ -19,11 +19,11 @@
 
 package org.catrobat.paintroid.test.espresso.util.wrappers;
 
-import android.support.test.espresso.FailureHandler;
-import android.support.test.espresso.Root;
-import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.ViewAssertion;
-import android.support.test.espresso.ViewInteraction;
+import androidx.test.espresso.FailureHandler;
+import androidx.test.espresso.Root;
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.ViewAssertion;
+import androidx.test.espresso.ViewInteraction;
 
 import org.hamcrest.Matcher;
 

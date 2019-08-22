@@ -33,9 +33,10 @@ import android.graphics.Region.Op;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.ColorRes;
-import android.support.annotation.VisibleForTesting;
 import android.util.DisplayMetrics;
+
+import androidx.annotation.ColorRes;
+import androidx.annotation.VisibleForTesting;
 
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.command.CommandManager;

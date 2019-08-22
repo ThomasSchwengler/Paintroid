@@ -19,14 +19,14 @@
 
 package org.catrobat.paintroid.test.espresso.util.wrappers;
 
-import android.support.test.espresso.ViewInteraction;
-import android.support.test.espresso.contrib.DrawerActions;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.contrib.DrawerActions;
 
 import org.catrobat.paintroid.R;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.swipeUp;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.swipeUp;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 public final class NavigationDrawerInteraction extends CustomViewInteraction {
 	private NavigationDrawerInteraction() {

@@ -21,7 +21,8 @@ package org.catrobat.paintroid.test.junit.model;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.catrobat.paintroid.command.CommandFactory;
 import org.catrobat.paintroid.command.CommandManager;

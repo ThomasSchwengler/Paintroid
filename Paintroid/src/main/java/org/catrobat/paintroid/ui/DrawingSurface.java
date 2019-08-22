@@ -36,10 +36,11 @@ import android.graphics.Shader;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import androidx.core.content.ContextCompat;
 
 import org.catrobat.paintroid.R;
 import org.catrobat.paintroid.contract.LayerContracts;

@@ -20,7 +20,8 @@
 package org.catrobat.paintroid.dialog;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDialogFragment;
+
+import androidx.appcompat.app.AppCompatDialogFragment;
 
 import org.catrobat.paintroid.contract.MainActivityContracts;
 

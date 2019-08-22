@@ -21,7 +21,8 @@ package org.catrobat.paintroid.test.junit.tools;
 
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.catrobat.paintroid.tools.helper.JavaFillAlgorithm;
 import org.catrobat.paintroid.tools.implementation.FillTool;

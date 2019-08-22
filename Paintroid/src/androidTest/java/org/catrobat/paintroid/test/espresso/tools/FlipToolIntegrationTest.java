@@ -20,8 +20,9 @@
 package org.catrobat.paintroid.test.espresso.tools;
 
 import android.graphics.Color;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
 
 import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.test.espresso.util.BitmapLocationProvider;

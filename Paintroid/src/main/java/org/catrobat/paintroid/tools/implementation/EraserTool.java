@@ -21,7 +21,8 @@ package org.catrobat.paintroid.tools.implementation;
 
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.ColorInt;
+
+import androidx.annotation.ColorInt;
 
 import org.catrobat.paintroid.command.CommandManager;
 import org.catrobat.paintroid.tools.ContextCallback;

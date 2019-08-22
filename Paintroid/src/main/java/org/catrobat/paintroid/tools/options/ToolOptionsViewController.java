@@ -19,9 +19,10 @@
 
 package org.catrobat.paintroid.tools.options;
 
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
 public interface ToolOptionsViewController {
 	void hideAnimated();

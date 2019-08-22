@@ -23,8 +23,9 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
 
 import org.catrobat.paintroid.MainActivity;
 import org.catrobat.paintroid.R;
@@ -41,7 +42,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.pressBack;
+import static androidx.test.espresso.Espresso.pressBack;
 
 import static org.catrobat.paintroid.test.espresso.util.OffsetLocationProvider.withOffset;
 import static org.catrobat.paintroid.test.espresso.util.UiInteractions.touchAt;
